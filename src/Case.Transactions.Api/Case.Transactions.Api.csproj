@@ -16,4 +16,9 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Case.Transactions.Domain\Case.Transactions.Domain.csproj" />
+    <ProjectReference Include="..\Case.Transactions.Infra\Case.Transactions.Infra.csproj" />
+  </ItemGroup>
+
 </Project>

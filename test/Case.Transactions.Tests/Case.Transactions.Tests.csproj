@@ -13,9 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Case.Transactions.Domain\Case.Transactions.Domain.csproj" />
-    <ProjectReference Include="..\Case.Transactions.Infra\Case.Transactions.Infra.csproj" />
-    <ProjectReference Include="..\src\Case.Transactions.Api\Case.Transactions.Api.csproj" />
+    <ProjectReference Include="..\..\src\Case.Transactions.Api\Case.Transactions.Api.csproj" />
+    <ProjectReference Include="..\..\src\Case.Transactions.Domain\Case.Transactions.Domain.csproj" />
+    <ProjectReference Include="..\..\src\Case.Transactions.Infra\Case.Transactions.Infra.csproj" />
   </ItemGroup>
 
 </Project>
