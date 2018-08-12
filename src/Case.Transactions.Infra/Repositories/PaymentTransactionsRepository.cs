@@ -1,5 +1,9 @@
-﻿using Case.Transactions.Domain.Models;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Case.Transactions.Domain.Filters;
+using Case.Transactions.Domain.Models;
 using Case.Transactions.Domain.Queries;
+using Case.Transactions.Infra.Builders;
 using Dapper;
 
 namespace Case.Transactions.Infra.Repositories
@@ -11,23 +15,44 @@ namespace Case.Transactions.Infra.Repositories
 		public PaymentTransactionsRepository(IDatabaseContext context)
 			=> this.context = context;
 
-		public QueryResult<PaymentTransaction> GetPaymentTransactions(string filter)
+		public QueryResult<PaymentTransaction> GetPaymentTransactions(PaymentTransactionFilters filters)
 		{
-			const string QUERY = @"SELECT merchantCnpj
-								, checkoutCode
-								, cipheredCardNumber
-								, amountInCents
-								, installments
-								, acquirerName
-								, paymentMethod
-								, cardBrandName
-								, status
-								, statusInfo
+			var (queryFilter, parameters) = new PaymentTransactionQueryBuilder(filters)
+				.MerchantCnpjsQuery()
+				.CheckoutCodesQuery()
+				.AcquirerNamesQuery()
+				.PaymentMethodsQuery()
+				.CardBrandNamesQuery()
+				.StatusQuery()
+				.CreatedDateQuery()
+				.AuthorizationDateQuery()
+				.Build();
+
+			if(string.IsNullOrEmpty(queryFilter))
+			{
+				return default(QueryResult<PaymentTransaction>);
+			}
+
+			var query = $@"SELECT MerchantCnpj
+								, CheckoutCode
+								, CipheredCardNumber
+								, AmountInCents
+								, Installments
+								, AcquirerName
+								, PaymentMethod
+								, CardBrandName
+								, Status
+								, StatusInfo
 								, CreatedAt
 								, AcquirerAuthorizationDateTime 
-								FROM PaymentTransaction WHERE merchantCnpj = @merchantCnpj";
+								FROM PaymentTransaction 
+								WHERE { queryFilter }";
 
-			var results = this.context.Connection.Query<PaymentTransaction>(QUERY, new { merchantCnpj = filter });
+			var results = this.context
+				.Connection
+				.Query<PaymentTransaction>(query, parameters)
+				.Skip((filters.Offset - 1) * filters.Limit)
+				.Take(filters.Limit);
 
 			var queryResult = new QueryResult<PaymentTransaction>();
 			queryResult.AddResults(results);
