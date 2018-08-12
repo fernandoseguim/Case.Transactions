@@ -25,7 +25,7 @@ namespace Case.Transactions.Infra.Builders
 			if (!string.IsNullOrWhiteSpace(this.filters.MerchantCnpjs))
 			{
 				this.FormatQuery($"MerchantCnpj in @MerchantCnpjs");
-				this.parameters.AddDynamicParams(new { MerchantCnpjs = GetFilterItems(this.filters.MerchantCnpjs) } );
+				this.parameters.Add("MerchantCnpjs", GetFilterItems(this.filters.MerchantCnpjs));
 			}
 			return this;
 		}
@@ -35,7 +35,7 @@ namespace Case.Transactions.Infra.Builders
 			if (!string.IsNullOrWhiteSpace(this.filters.CheckoutCodes))
 			{
 				this.FormatQuery($"CheckoutCode in @CheckoutCodes");
-				this.parameters.AddDynamicParams(new { CheckoutCodes = GetFilterItems(this.filters.CheckoutCodes) });
+				this.parameters.Add("CheckoutCodes", GetFilterItems(this.filters.CheckoutCodes));
 			}
 			return this;
 		}
@@ -45,7 +45,7 @@ namespace Case.Transactions.Infra.Builders
 			if (!string.IsNullOrWhiteSpace(this.filters.AcquirerNames))
 			{
 				this.FormatQuery($"AcquirerName in @AcquirerNames");
-				this.parameters.AddDynamicParams(new { AcquirerNames = GetFilterItems(this.filters.AcquirerNames) });
+				this.parameters.Add("AcquirerNames", GetFilterItems(this.filters.AcquirerNames));
 			}
 			return this;
 		}
@@ -55,7 +55,7 @@ namespace Case.Transactions.Infra.Builders
 			if (!string.IsNullOrWhiteSpace(this.filters.PaymentMethods))
 			{
 				this.FormatQuery($"PaymentMethod in @PaymentMethods");
-				this.parameters.AddDynamicParams(new { PaymentMethods = GetFilterItems(this.filters.PaymentMethods) });
+				this.parameters.Add("PaymentMethods", GetFilterItems(this.filters.PaymentMethods));
 			}
 			return this;
 		}
@@ -65,7 +65,7 @@ namespace Case.Transactions.Infra.Builders
 			if (!string.IsNullOrWhiteSpace(this.filters.CardBrandNames))
 			{
 				this.FormatQuery($"CardBrandName in @CardBrandNames");
-				this.parameters.AddDynamicParams(new { CardBrandNames = GetFilterItems(this.filters.CardBrandNames) });
+				this.parameters.Add("CardBrandNames", GetFilterItems(this.filters.CardBrandNames));
 			}
 			return this;
 		}
@@ -75,7 +75,7 @@ namespace Case.Transactions.Infra.Builders
 			if (!string.IsNullOrWhiteSpace(this.filters.Status))
 			{
 				this.FormatQuery($"Status in @Status");
-				this.parameters.AddDynamicParams(new { Status = GetFilterItems(this.filters.Status) });
+				this.parameters.Add("Status", GetFilterItems(this.filters.Status));
 			}
 			return this;
 		}
@@ -90,7 +90,8 @@ namespace Case.Transactions.Infra.Builders
 				}
 
 				this.FormatQuery($"CreatedAt BETWEEN @CreatedDateStart AND @CreatedDateEnd");
-				this.parameters.AddDynamicParams(new { this.filters.CreatedDateStart, this.filters.CreatedDateEnd });
+				this.parameters.Add("CreatedDateStart", this.filters.CreatedDateStart);
+				this.parameters.Add("CreatedDateEnd", this.filters.CreatedDateEnd);
 			}
 			return this;
 		}
@@ -105,7 +106,8 @@ namespace Case.Transactions.Infra.Builders
 				}
 
 				this.FormatQuery($"AcquirerAuthorizationDateTime BETWEEN @AuthorizationDateStart AND @AuthorizationDateEnd");
-				this.parameters.AddDynamicParams(new { this.filters.AuthorizationDateStart, this.filters.AuthorizationDateEnd });
+				this.parameters.Add("AuthorizationDateStart", this.filters.AuthorizationDateStart);
+				this.parameters.Add("AuthorizationDateEnd", this.filters.AuthorizationDateEnd);
 			}
 			return this;
 		}
