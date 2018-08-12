@@ -20,8 +20,8 @@ namespace Case.Transactions.Tests.Queries
 		}
 
 		[TestMethod]
-		[Description("When instance query result with transaction type and add a result list the results should contains transaction items")]
-		public void Should_contains_transaction_items()
+		[Description("When instance query result with transaction type and add a result list the results should contains payment transaction items")]
+		public void Should_contains_payment_transaction_items()
 		{
 			var queryResult = new QueryResult<PaymentTransaction>();
 			queryResult.AddResults(this.results);
