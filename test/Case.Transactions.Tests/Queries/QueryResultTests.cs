@@ -9,24 +9,24 @@ namespace Case.Transactions.Tests.Queries
 	[TestClass]
 	public class QueryResultTests
 	{
-		private readonly IEnumerable<Transaction> results;
+		private readonly IEnumerable<PaymentTransaction> results;
 
-	    public QueryResultTests()
-	    {
-		    this.results = new List<Transaction>()
-		    {
-				new Transaction()
-		    };
-	    }
+		public QueryResultTests()
+		{
+			this.results = new List<PaymentTransaction>()
+			{
+				new PaymentTransaction()
+			};
+		}
 
-	    [TestMethod]
+		[TestMethod]
 		[Description("When instance query result with transaction type and add a result list the results should contains transaction items")]
-	    public void When_add_results_shoul_contains_transaction_items()
-	    {
-			var queryResult = new QueryResult<Transaction>();
+		public void Should_contains_transaction_items()
+		{
+			var queryResult = new QueryResult<PaymentTransaction>();
 			queryResult.AddResults(this.results);
 
 			Assert.IsTrue(queryResult.Results.ToList().Contains(this.results.First()));
-	    }
-    }
+		}
+	}
 }
